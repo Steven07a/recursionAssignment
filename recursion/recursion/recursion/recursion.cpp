@@ -40,26 +40,37 @@ void R3_first_second(string first, string second, int level) {
 
 void R4_Boxes(int count,string boxes) {
     string input;
-    if (count <= 0) {
-        cout << "How many boxes are in the room? ";
+    if (count < 0 || count > 0) {
+        if (count < 0) {
+            cout << "How many boxes are in this room? ";
+        } else if (count > 0) {
+            cout << "How many boxes are in this box? ";
+        } 
         cin >> count;
-        R4_Boxes(count, "");
-    } else if(count > 0) {
-        cout << "How many boxes are in this box? ";
-        cin >> count;
-        for (int i = 0; i < count; i++) {
-            boxes += to_string(i + 1);
-            cout << "opening box " << boxes << endl;
-            cout << "are there more boxes inside [y] [n]: ";
-            cin >> input;
-            if (input == "y") {
-                boxes += "." + to_string(i+1);
-                R4_Boxes(i+1,boxes);
-            } else {
-                cout << boxes << endl;
-            }
-
+        if (count == 0) {
+            cout << "There are 0 boxes." << endl;
         }
+        for (int i = 1; i <= count; i++) {
+            boxes += to_string(i);
+            cout << "Opening box: " << boxes << endl;
+            cout << "Are there more boxes inside [y] [n]: ";
+            cin >> input;
+            if (input == "y" || input == "Y") {
+                boxes += ".";
+                R4_Boxes(i, boxes);
+            } else {
+                cout << "Closing box: " << boxes << endl;
+                boxes.erase(boxes.size()-1,1);
+            }
+        }
+    }
+}
+
+double R5_sumover(int num) {
+    if (num == 0) {
+        return 0;
+    } else { 
+        return(R5_sumover(num - 1)/1);
     }
 }
 
@@ -84,7 +95,8 @@ int main() {
     //R1_levls(0);
     //R2_Box("BOX", 0);
     //R3_first_second("CATS","MAN", 0);
-    R4_Boxes(0, "");
+    //R4_Boxes(-1, "");
+    cout << R5_sumover(1);
     //R16_guess(1, 1000000);
     
     return 0;
